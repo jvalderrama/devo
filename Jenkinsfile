@@ -13,6 +13,7 @@ pipeline {
     stage('Unit Test') {
       steps {
         //sh 'python test.py'
+          sh 'Success'
       }
     } 
 
