@@ -8,6 +8,7 @@
 * Pyyaml
 * virtualenv
 * Ansible
+* Terraform
 
 In order to accomplish all the challenge, it has been divided into three main points/parts:
 1. (Incubation): Localhost development, tools, build and deploy application, plus package python pplication to distribute over Pypi Server
