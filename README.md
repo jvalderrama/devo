@@ -217,7 +217,8 @@ generated and guaranteed a minimum number of pods in different workers nodes in 
 for the API application using the PodAntiaffinity` feature and using a 'infrastructure' namespace. Finally a `Pod elasticity` 
 has been created in order to attend high or low demand of the service using `HPA` resource with its corresponding `Ingress resource`. 
 
-6. Finally a guide is given to create a `Helm Chart` for the API application.
+6. Finally a guide is given to create a `Helm Chart` for the API application, and ansible can be used as before to deploy the k8s templates
+in a Jenkins pipeline as well.
 
 ## References
 
