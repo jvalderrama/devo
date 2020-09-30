@@ -10,10 +10,10 @@
 * Ansible
 * Terraform
 
-In order to accomplish all the challenge, it has been divided into three main points/parts:
-1. (Incubation): Localhost development, tools, build and deploy application, plus package python pplication to distribute over Pypi Server
-2. (Dockerization): Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile
-3. (IaC and K8s): Ansible to update host/port configuration application file for RabbitMQ Server, Terraform for EC2, Templates for k8s and Helm Chart
+In order to accomplish the entire challenge, it has been divided into three main points/parts:
+1. **Incubation**: Localhost development, tools, build and deploy application, plus package python application to distribute over a Pypi Server/Repository
+2. **Dockerization**: Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile, tested over local Jenkins
+3. **IaC and K8s**: Ansible to update host/port configuration application file for RabbitMQ Server, Terraform for EC2 instance, Templates for k8s and Helm Chart
 
 # 1. Incubation
 
@@ -54,7 +54,7 @@ python test.py
 ``` 
 **Deploy** the Web Check application
 ```
-python app.pyfinal a
+python app.py
 ```  
 
 Go to your browser and check the Rabbit MQ Server Status
@@ -62,9 +62,9 @@ Go to your browser and check the Rabbit MQ Server Status
 http://localhost:5000/
 ```
 
-## Package Web Check application to install over a EC2 instance 
+## Package Web Check application to install over an EC2 instance 
 
-In order to deploy the Web Check application over a EC2 instances just run.
+In order to deploy the Web Check application over an EC2 instances just run.
 Note: See section [3. IaC and K8s](https://github.com/jvalderrama/devo#EC2-Instance) in order to deploy an
  EC2 instance with Terraform). 
 
@@ -83,7 +83,8 @@ Pypi server repository and been installed like **pip install devo**.
 
 # 2. Dockerization
 
-In order to deploy the Web Check Application over a kubernetes or simple docker solution must be create a image deploy it over a complete pipeline in Jenkins
+In order to deploy the Web Check Application over a kubernetes or simple docker solution must be created an image 
+to deploy it over a complete Jenkins pipeline
 
 ## Step by Step dockerization process
 ```
@@ -121,33 +122,38 @@ bash-5.0# cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
 Configure your Multibranch Job I - Repository
+
 ![Jenkins Multibranch Configuration 1](/images/MultibranchJobConfiguration1.png)
 
 Configure your Multibranch Job II - Jenkinsfile
+
 ![Jenkins Multibranch Configuration 2](/images/MultibranchJobConfiguration2.png)
 
-Execute with any change made in the repository
+Execute with Jenkins pipeline with any change made in the repository
+
 ![Jenkins Pipeline_Execution](/images/PipelineExecution.png)
 
 # 3. IaC and K8s
 
-In order to update the host/port configuration application file forRabbitMQ Server has been created an Ansible recipe 
-who can be parametrized with hosts/port/destination but at the same time it has **defaults** configuration variables and 
-can be managed through and **static**  or **template** file.
+In order to update the host/port configuration application file for RabbitMQ Server has been created an Ansible recipe 
+who can be parametrized with hosts/port and also a destination, but at the same time it has its own **defaults** 
+configuration variables and can be managed through and **static** or **template** file generated.
 
 ## Run the playbook
 
 Got to **devo/ansible** folder and run the next command, before it check the file **all.yaml** to define your custom variables
+
 ```
 ansible-playbook -i hosts.yaml all.yaml --connection=local -vv
 ```   
 
 Executed playbook
+
 ![Jenkins Pipeline_Execution](/images/UpdateRabbitMQConfigFile.png)
 
 ## EC2 Instance
 
-By other hand a EC2 instance need to be created, therefore a terraform plan is given:
+By other hand a EC2 instance needs to be created, therefore a terraform recipe is given:
 
 Go to **devo/terraform** folder
 
@@ -171,6 +177,7 @@ The HA is guaranteed using **PodAntiaffinity** k8s feature, it means who at leas
 **two or more replicas in different nodes in the cluster**, not just two or more replicas in a single node.
 
 HA in K8s Deployment
+
 ![Jenkins Pipeline_Execution](/images/HA-devo-appi.png)
 
 
@@ -182,11 +189,11 @@ has been pushed to **devo-repo/devo:latest**
 kubectl apply -f app.yaml
 ``` 
 
-For high workload capacity has been created and HPA (Horozontal Pod Autoscaler) for the deployment and a Ingress to 
-access per DNS (See app.yaml)
+For high workload capacity has been created and HPA (Horozontal Pod Autoscaler) for the deployment and an Ingress to 
+access per DNS (See devo/k8s/1app.yaml)
 
-Finally in order to create a Chart for Helm, please read the next training course created by me who guides to accomplish this feature:
-[3. Packages Helm apps](https://github.com/jvalderrama/helm-training)
+Finally in order to create a Chart for Helm, please read the next training course created by me who guides to accomplish
+this feature: [3. Packages Helm apps](https://github.com/jvalderrama/helm-training)
 
 ## Conclusions
 
@@ -221,14 +228,3 @@ has been created in order to attend high or low demand of the service using `HPA
 * https://serversforhackers.com/c/an-ansible2-tutorial
 * https://github.blog/2013-01-31-relative-links-in-markup-files/
 * https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#more-practical-use-cases  
-
- 
-
-
-
-
-
-
-
-
-
