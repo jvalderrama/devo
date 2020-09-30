@@ -35,7 +35,7 @@ virtualenv -p python3 envname
 ```
 source envname/bin/activate
 ```  
-* Go to devo/rabbitmq folder and type
+* Go to **devo/rabbitmq** folder and type
 ```
 python receive.py
 ```
@@ -134,7 +134,7 @@ can be managed through and **static**  or **template** file.
 
 ## Run the playbook
 
-Got to devo/ansible folder and run, Check the file **all.yaml** to define your custom variables
+Got to **devo/ansible** folder and run the next command, before it check the file **all.yaml** to define your custom variables
 ```
 ansible-playbook -i hosts.yaml all.yaml --connection=local -vv
 ```   
