@@ -1,0 +1,3 @@
+rabbitmq:
+    host: {{host}}
+    port: {{port}}

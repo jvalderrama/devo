@@ -7,11 +7,12 @@
 * Pika 
 * Pyyaml
 * virtualenv
+* Ansible
 
 In order to accomplish all the challenge, it has been divided into three main points:
 1. (Incubation): Localhost development, tools, build and deploy application, plus package python pplication to distribute over Pypi Server
 2. (Dockerization): Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile
-3. 
+3. (IaC and K8s): Ansible to update host/port configuration application file for RabbitMQ Server, Templates for k8s and Helm Chart
 
 # 1. Incubation
 
@@ -124,6 +125,26 @@ Configure your Multibranch Job II - Jenkinsfile
 
 Execute with any change made in the repository
 ![Jenkins Pipeline_Execution](/images/PipelineExecution.png)
+
+# 3. IaC and K8s
+
+In order to update the host/port configuration application file forRabbitMQ Server has been created an Ansible recipe 
+who can be parametrized with hosts/port/destination but at the same time it has **defaults** configuration variables and 
+can be managed through and **static**  or **template** file.
+
+## Run the playbook
+
+Got to devo/ansible folder and run, Check the file **all.yaml** to define your custom variables
+```
+ansible-playbook -i hosts.yaml all.yaml --connection=local -vv
+```   
+
+Executed playbook
+![Jenkins Pipeline_Execution](/images/UpdateRabbitMQConfigFile.png)
+
+
+
+
 
 
 

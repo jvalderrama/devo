@@ -1,0 +1,8 @@
+- name: Copy rabbitmq YAML configuration file
+  copy: src=rabbitmq.yaml dest="{{destination_file}}"
+
+- name: Copy rabbitmq YAML template generate
+  template:
+    src: rabbitmq.yaml
+    dest: "{{destination_file}}"
+    mode: 0640
