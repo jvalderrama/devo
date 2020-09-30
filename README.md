@@ -10,7 +10,7 @@
 
 In order to accomplish all the challenge, it has been divided into three main points:
 1. (Incubation): Localhost development, tools, build and deploy application, plus package python pplication to distribute over Pypi Server
-2. (Dockerization): Dockerized application, continuous integration and deployment pipeline using Jenkinsfile
+2. (Dockerization): Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile
 3. 
 
 # 1. Incubation
@@ -115,6 +115,15 @@ docker exec -it  <id-container> /bin/bash
 bash-5.0# cat /var/jenkins_home/secrets/initialAdminPassword
 4c247b18af1a4d9e9bd227ba6edcf2c4 by example
 ```
+
+Configure your Multibranch Job I - Repository
+![Jenkins Multibranch Configuration 1](/images/MultibranchJobConfiguration1.png)
+
+Configure your Multibranch Job II - Jenkinsfile
+![Jenkins Multibranch Configuration 2](/images/MultibranchJobConfiguration2.png)
+
+Execute with any change made in the repository
+![Jenkins Pipeline_Execution](/images/PipelineExecution.png)
 
 
 
