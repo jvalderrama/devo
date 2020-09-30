@@ -9,7 +9,7 @@
 * virtualenv
 * Ansible
 
-In order to accomplish all the challenge, it has been divided into three main points:
+In order to accomplish all the challenge, it has been divided into three main points/parts:
 1. (Incubation): Localhost development, tools, build and deploy application, plus package python pplication to distribute over Pypi Server
 2. (Dockerization): Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile
 3. (IaC and K8s): Ansible to update host/port configuration application file for RabbitMQ Server, Terraform for EC2, Templates for k8s and Helm Chart
@@ -162,6 +162,67 @@ terraform plan
 terraform apply
 
 ```
+
+## K8s and Chart Deployment
+
+In order to deploy the Web Check Application over a kubernetes cluster in HA has been created a set of templates:
+The HA is guaranteed using **PodAntiaffinity** k8s feature, it means who at least the Deployment is going to deploy 
+**two or more replicas in different nodes in the cluster**, not just two or more replicas in a single node.
+
+HA in K8s Deployment
+![Jenkins Pipeline_Execution](/images/HA-devo-appi.png)
+
+
+Go to folder **devo/k8s** and execute. 
+NOTE: A kubeconfig file must be exists and kubectl client installed on your localhost, it assumes the docker images 
+has been pushed to **devo-repo/devo:latest**
+
+```
+kubectl apply -f app.yaml
+``` 
+
+For high workload capacity has been created and HPA (Horozontal Pod Autoscaler) for the deployment and a Ingress to 
+access per DNS (See app.yaml)
+
+Finally in order to create a Chart for Helm, please read the next training course created by me who guides to accomplish this feature:
+[3. Packages Helm apps](https://github.com/jvalderrama/helm-training)
+
+## Conclusions
+
+1. Has been created and API application who check the status (running or stopped) of a RabbitMQ Server, the first part demonstrates
+how to create the API using Flask framework and a configuration file for RabbitMQ server, the application has its own 
+tests and has been tested against a RabbitMQ server who is running as docker container.
+
+2. The API application can be installed and package as PIP distribution (setup.py), therefore once an EC2 instances is created 
+with Terrraform (no tested yet), the API application can be installed like "pip install devo" over the EC2 instances 
+without any container or image.
+
+3. Once made the above a second parts demonstrates  a complete pipeline has been created to 'dockerized' and deploy the 
+application like a docker container. 
+It has been through a Dockerfile, requirements file and a Jenkinsfile (Declarative Pipeline) tested over a local Jenkins 
+installation from scratch.
+
+4. The third part demonstrates an ansible recipe created and tested to update de host/port/destination of the API application
+configuration file, along with a Terraform recipe to crate EC2 instances with its VPC.
+
+5. A kubernetes deployment has been provided assuming the `push` of the previous docker images to a Devo repository, 
+generated and guaranteed a minimum number of pods in different workers nodes in the K8s cluster to have a first HA approach 
+for the API application using the PodAntiaffinity feature and using a 'infrastructure' namespace. Finally a Pod elasticity 
+has been created in order to attend high or low demand of the service with its corresponding Ingress resource. 
+
+6. Finally a guide is given to create a Helm Chart for the API application.
+
+## References
+
+* https://www.rabbitmq.com/download.html
+* https://martin-thoma.com/configuration-files-in-python/
+* https://docs.python-guide.org/shipping/packaging/
+* https://github.com/jvalderrama/helm-training
+* https://serversforhackers.com/c/an-ansible2-tutorial
+* https://github.blog/2013-01-31-relative-links-in-markup-files/
+* https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#more-practical-use-cases  
+
+ 
 
 
 
