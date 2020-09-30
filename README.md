@@ -65,6 +65,7 @@ http://localhost:5000/
 ## Package Web Check application to install over an EC2 instance 
 
 In order to deploy the Web Check application over an EC2 instances just run.
+
 Note: See section [3. IaC and K8s](https://github.com/jvalderrama/devo#EC2-Instance) in order to deploy an
  EC2 instance with Terraform). 
 
