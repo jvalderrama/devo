@@ -48,7 +48,7 @@ python send.py
 
 ## Test and Deploy Web check application in your localhost
 
-Go to dev/app and **test** the Web Check application.
+Go to **devo/app** and **test** the Web Check application.
 ```
 python test.py
 ``` 
@@ -67,7 +67,7 @@ http://localhost:5000/
 In order to deploy the Web Check application over an EC2 instances just run.
 
 Note: See section [3. IaC and K8s](https://github.com/jvalderrama/devo#EC2-Instance) in order to deploy an
- EC2 instance with Terraform). 
+ EC2 instance with Terraform. 
 
 ```
 python setup.py
@@ -79,8 +79,8 @@ Just run in your localhost
 devo
 ```
 
-Therefore the Web Check application has been package and could be distribute like any other (pika, flask, etc) over a 
-Pypi server repository and been installed like **pip install devo**.
+Therefore the Web Check application has been packaged and could be distribute like any other (pika, flask, pyyaml, etc) 
+over a **Pypi server repository** and being installed like **pip install devo** over the EC2 instance or any machine. 
 
 # 2. Dockerization
 
@@ -137,8 +137,8 @@ Execute with Jenkins pipeline with any change made in the repository
 # 3. IaC and K8s
 
 In order to update the host/port configuration application file for RabbitMQ Server has been created an Ansible recipe 
-who can be parametrized with hosts/port and also a destination, but at the same time it has its own **defaults** 
-configuration variables and can be managed through and **static** or **template** file generated.
+who can be parametrized with **hosts/port** and also a **destination**, but at the same time it has its own **defaults** 
+configuration variables and can be managed through an **static** or **template** file generated.
 
 ## Run the playbook
 
@@ -154,9 +154,9 @@ Executed playbook
 
 ## EC2 Instance
 
-By other hand a EC2 instance needs to be created, therefore a terraform recipe is given:
+By other hand an EC2 instance needs to be created, therefore a terraform recipe is given:
 
-Go to **devo/terraform** folder
+Go to **devo/terraform** folder, it has:
 
 1. Create main file (AWS provider with credentials)
 2. Create a VPC on AWS
@@ -173,8 +173,8 @@ terraform apply
 
 ## K8s and Chart Deployment
 
-In order to deploy the Web Check Application over a kubernetes cluster in HA has been created a set of templates:
-The HA is guaranteed using **PodAntiaffinity** k8s feature, it means who at least the Deployment is going to deploy 
+In order to deploy the Web Check Application over a kubernetes cluster in HA, has been created a set of templates.
+The HA is guaranteed using **PodAntiaffinity** k8s feature, it means that at least the Deployment is going to have 
 **two or more replicas in different nodes in the cluster**, not just two or more replicas in a single node.
 
 HA in K8s Deployment
@@ -183,6 +183,7 @@ HA in K8s Deployment
 
 
 Go to folder **devo/k8s** and execute. 
+
 NOTE: A kubeconfig file must be exists and kubectl client installed on your localhost, it assumes the docker images 
 has been pushed to **devo-repo/devo:latest**
 
@@ -190,8 +191,8 @@ has been pushed to **devo-repo/devo:latest**
 kubectl apply -f app.yaml
 ``` 
 
-For high workload capacity has been created and HPA (Horozontal Pod Autoscaler) for the deployment and an Ingress to 
-access per DNS (See devo/k8s/1app.yaml)
+For high workload capacity has been created and HPA (Horizontal Pod Autoscaler) for the deployment and an Ingress to 
+access per DNS (See devo/k8s/app.yaml)
 
 Finally in order to create a Chart for Helm, please read the next training course created by me who guides to accomplish
 this feature: [3. Packages Helm apps](https://github.com/jvalderrama/helm-training)
@@ -199,8 +200,8 @@ this feature: [3. Packages Helm apps](https://github.com/jvalderrama/helm-traini
 ## Conclusions
 
 1. Has been created and API application who check the status (running or stopped) of a RabbitMQ Server, the first part demonstrates
-how to create the API using `Flask framework` and a `configuration file for RabbitMQ server`, the application has its own 
-tests and has been tested against a RabbitMQ server who is running as docker container.
+how to create the API using `Flask framework` and a `configuration file for RabbitMQ server application connection`, 
+the **application has its own tests** and has been **tested against a RabbitMQ server** who is running as docker container.
 
 2. The API application can be installed and package as `PIP distribution (setup.py)`, therefore once an `EC2 instances` is created 
 with `Terrraform` (no tested yet), the API application can be installed like `pip install devo` over the EC2 instances 
@@ -215,11 +216,12 @@ configuration file, along with a `Terraform recipe to crate EC2 instances with i
 
 5. A `kubernetes deployment` has been provided assuming the `push` of the previous docker images to a Devo repository, 
 generated and guaranteed a minimum number of pods in different workers nodes in the K8s cluster to have a `first HA approach 
-for the API application using the PodAntiaffinity` feature and using a 'infrastructure' namespace. Finally a `Pod elasticity` 
-has been created in order to attend high or low demand of the service using `HPA` resource with its corresponding `Ingress resource`. 
+for the API application using the PodAntiaffinity` feature and using an `infrastructure` namespace. Finally a `Pod elasticity` 
+has been created in order to attend high or low demand of the service using `HPA` resource with its corresponding 
+`Service and Ingress resource`. 
 
-6. Finally a guide is given to create a `Helm Chart` for the API application, and ansible can be used as before to deploy the k8s templates
-in a Jenkins pipeline as well.
+6. Finally a guide is given to create a `Helm Chart` for the API application.
+Ansible can be used like before in order to deploy the k8s templates in a Jenkins pipeline as well.
 
 ## References
 
