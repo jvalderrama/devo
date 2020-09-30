@@ -1,0 +1,6 @@
+build
+Devo_Web_App.egg-info
+dist
+envname
+jenkins
+*.pyc
