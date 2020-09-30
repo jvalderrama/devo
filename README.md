@@ -12,7 +12,7 @@
 In order to accomplish all the challenge, it has been divided into three main points:
 1. (Incubation): Localhost development, tools, build and deploy application, plus package python pplication to distribute over Pypi Server
 2. (Dockerization): Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile
-3. (IaC and K8s): Ansible to update host/port configuration application file for RabbitMQ Server, Templates for k8s and Helm Chart
+3. (IaC and K8s): Ansible to update host/port configuration application file for RabbitMQ Server, Terraform for EC2, Templates for k8s and Helm Chart
 
 # 1. Incubation
 
@@ -63,7 +63,9 @@ http://localhost:5000/
 
 ## Package Web Check application to install over a EC2 instance 
 
-In order to deploy the Web Check application over a EC2 instances, just run
+In order to deploy the Web Check application over a EC2 instances just run.
+Note: See section [3. IaC and K8s](https://github.com/jvalderrama/devo#EC2-Instance) in order to deploy an
+ EC2 instance with Terraform). 
 
 ```
 python setup.py
@@ -141,6 +143,26 @@ ansible-playbook -i hosts.yaml all.yaml --connection=local -vv
 
 Executed playbook
 ![Jenkins Pipeline_Execution](/images/UpdateRabbitMQConfigFile.png)
+
+## EC2 Instance
+
+By other hand a EC2 instance need to be created, therefore a terraform plan is given:
+
+Go to **devo/terraform** folder
+
+1. Create main file (AWS provider with credentials)
+2. Create a VPC on AWS
+3. Create EC2 instances over VPC
+4. Output public IP once the instance has been created
+
+Just type
+```
+terraform init
+terraform plan
+terraform apply
+
+```
+
 
 
 
