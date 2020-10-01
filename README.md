@@ -158,10 +158,10 @@ By other hand an EC2 instance needs to be created, therefore a terraform recipe 
 
 Go to **devo/terraform** folder, it has:
 
-1. Create main file (AWS provider with credentials)
-2. Create a VPC on AWS
-3. Create EC2 instances over VPC
-4. Output public IP once the instance has been created
+1. Create main file (AWS provider with credentials, region)
+2. Create a VPC on AWS (CIDR block) 
+3. Create EC2 instances over VPC (Instance type and AMI ID)
+4. Output EC2 instances (Public IP once the instance has been created on AWS)
 
 Just type
 ```
