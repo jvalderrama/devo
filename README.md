@@ -11,9 +11,12 @@
 * Terraform
 
 In order to accomplish the entire challenge, it has been divided into three main points/parts:
-1. **Incubation**: Localhost development, tools, build and deploy application, plus package python application to distribute over a Pypi Server/Repository
-2. **Dockerization**: Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile, tested over local Jenkins
-3. **IaC and K8s**: Ansible to update host/port configuration application file for RabbitMQ Server, Terraform for EC2 instance, Templates for k8s and Helm Chart
+1. **Incubation**: Localhost development, tools, build, test and deploy application, also package the python application 
+to distribute over a Pypi Server/Repository and be installed over EC2 instances
+2. **Dockerization**: Dockerized application, continuous integration and deployment pipeline using a Jenkinsfile, 
+tested over local Jenkins deployment
+3. **IaC and K8s**: Ansible to update host/port configuration application file for RabbitMQ Server, Terraform for EC2 
+instance, Templates for k8s and Helm Chart
 
 # 1. Incubation
 
@@ -93,7 +96,8 @@ cd devo/app
 docker build -f Dockerfile -t devo:latest .
 docker run -p 5000:5000 devo:latest
 ```
-That's it, now to test the app/Jenkinsfile execute the next steps:
+That's it, now to test the continuous integration and deployment pipeline defined in **app/Jenkinsfile** execute the 
+next steps:
 
 Create a volume for Jenkins
 ```
@@ -138,7 +142,7 @@ Execute with Jenkins pipeline with any change made in the repository
 
 In order to update the host/port configuration application file for RabbitMQ Server has been created an Ansible recipe 
 who can be parametrized with **hosts/port** and also a **destination**, but at the same time it has its own **defaults** 
-configuration variables and can be managed through an **static** or **template** file generated.
+configuration variables and can be managed/updated through an **static** or **template** file generated.
 
 ## Run the playbook
 
@@ -174,8 +178,9 @@ terraform apply
 ## K8s and Chart Deployment
 
 In order to deploy the Web Check Application over a kubernetes cluster in HA, has been created a set of templates.
-The HA is guaranteed using **PodAntiaffinity** k8s feature, it means that at least the Deployment is going to have 
-**two or more replicas in different nodes in the cluster**, not just two or more replicas in a single node.
+The HA is guaranteed using **PodAntiaffinity** k8s feature and its **topologyKey: "kubernetes.io/hostname"** key/value 
+definition, that means who at least the Deployment is going to have **two or more replicas in different nodes in the cluster**, 
+not just two or more replicas in a single node.
 
 HA in K8s Deployment
 
